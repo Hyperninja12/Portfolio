@@ -2,72 +2,194 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════
+   FUTURISTIC DESIGN SYSTEM
+   ═══════════════════════════════════════════ */
+
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 240, 255, 0.2) transparent;
   }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.2);
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 240, 255, 0.4);
+  }
+
+  ::selection {
+    background: rgba(0, 240, 255, 0.2);
+    color: #00f0ff;
+  }
+
   body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background-color: #0B1120;
-    color: #e2e8f0;
+    background-color: #030712;
+    color: #d1d5db;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
-  ::selection {
-    background-color: rgba(16, 185, 129, 0.3);
-    color: #fff;
+
+  html {
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
   }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #0B1120; }
-  ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(16,185,129,0.5); }
 }
 
 @layer components {
+  /* ── Glassmorphism ────────────────────── */
   .glass {
-    background: rgba(17, 24, 39, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl;
   }
-  .glass-light {
-    background: rgba(30, 41, 59, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+
+  .glass-hover {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl transition-all duration-500;
   }
+
+  .glass-hover:hover {
+    @apply bg-white/[0.06] border-white/[0.12];
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+  }
+
+  .glass-strong {
+    @apply bg-white/[0.06] backdrop-blur-2xl border border-white/[0.1] rounded-2xl;
+  }
+
+  /* ── Gradient Text ────────────────────── */
   .gradient-text {
-    background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #10b981 100%);
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #00f0ff 0%, #10b981 50%, #00f0ff 100%);
     background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     animation: gradient 4s ease infinite;
   }
-  .gradient-border {
+
+  .gradient-text-purple {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #a855f7 100%);
+    background-size: 200% auto;
+    animation: gradient 4s ease infinite;
+  }
+
+  /* ── Glow Effects ─────────────────────── */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+  }
+
+  .glow-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+
+  .glow-border {
     position: relative;
   }
-  .gradient-border::before {
+
+  .glow-border::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(16,185,129,0.5), rgba(6,182,212,0.5));
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), transparent, rgba(16, 185, 129, 0.2));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
-  .glow-emerald {
-    box-shadow: 0 0 20px rgba(16,185,129,0.15), 0 0 40px rgba(16,185,129,0.05);
+
+  /* ── Section Transitions ──────────────── */
+  .section-fade-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(3, 7, 18, 0.8), transparent);
+    pointer-events: none;
+    z-index: 1;
   }
-  .glow-cyan {
-    box-shadow: 0 0 20px rgba(6,182,212,0.15), 0 0 40px rgba(6,182,212,0.05);
+
+  /* ── Input Focus Glow ─────────────────── */
+  .input-glow {
+    @apply w-full px-5 py-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white placeholder-gray-600 outline-none transition-all duration-300;
+  }
+
+  .input-glow:focus {
+    border-color: rgba(0, 240, 255, 0.3);
+    background-color: rgba(0, 240, 255, 0.03);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.08), inset 0 0 20px rgba(0, 240, 255, 0.03);
+  }
+
+  .input-glow:hover:not(:focus) {
+    @apply border-white/[0.15];
+  }
+
+  /* ── Magnetic Button Base ─────────────── */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-white rounded-xl overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #0891b2, #059669);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #06b6d4, #10b981);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+  }
+
+  .btn-primary span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-white rounded-xl border border-white/[0.1] bg-white/[0.03] backdrop-blur-sm transition-all duration-300;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    background-color: rgba(0, 240, 255, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
   }
 }
 
 @layer utilities {
-  .animation-delay-2000 { animation-delay: 2s; }
-  .animation-delay-4000 { animation-delay: 4s; }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 60%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent);
+  }
 }

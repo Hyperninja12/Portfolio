@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send, MapPin, Mail, Phone } from 'lucide-react'
-import SectionHeading from '../components/SectionHeading'
-import SocialLinks from '../components/SocialLinks'
-import GradientBlob from '../components/GradientBlob'
-import { fadeInUp, fadeInLeft, fadeInRight } from '../animations/variants'
+import SectionHeading from '../components/ui/SectionHeading'
+import GlassCard from '../components/ui/GlassCard'
+import MagneticButton from '../components/ui/MagneticButton'
+import { fadeInLeft, fadeInRight } from '../utils/animations'
+
+const contactInfo = [
+  { icon: Mail, label: 'Email', value: 'hello@ashton.dev' },
+  { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
+  { icon: MapPin, label: 'Location', value: 'San Francisco, CA' },
+]
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -14,21 +20,12 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    alert('Thank you for your message! I\'ll get back to you soon.')
+    alert("Thank you for your message! I'll get back to you soon.")
     setFormData({ name: '', email: '', message: '' })
   }
 
-  const inputClass = (field) =>
-    `w-full px-5 py-4 rounded-xl bg-white/5 border text-white placeholder-gray-500 outline-none transition-all duration-300 ${
-      focused === field
-        ? 'border-primary-500/50 bg-primary-500/5 shadow-lg shadow-primary-500/10'
-        : 'border-white/10 hover:border-white/20'
-    }`
-
   return (
     <section id="contact" className="relative py-24 lg:py-32 overflow-hidden">
-      <GradientBlob className="inset-0 opacity-40" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Contact"
@@ -36,51 +33,46 @@ export default function Contact() {
           subtitle="Have a project in mind or want to collaborate? I'd love to hear from you."
         />
 
-        <div className="grid lg:grid-cols-5 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
           {/* Info */}
           <motion.div
             variants={fadeInLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-8"
+            className="lg:col-span-2 space-y-6"
           >
-            <div className="p-6 rounded-2xl glass">
-              <h3 className="text-xl font-bold text-white mb-6">Let's work together</h3>
+            <GlassCard>
+              <h3 className="text-lg font-bold text-white mb-6">Let's work together</h3>
               <div className="space-y-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center shrink-0">
-                    <Mail size={18} className="text-primary-400" />
+                {contactInfo.map(({ icon: Icon, label, value }) => (
+                  <div key={label} className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-neon-cyan/[0.06] border border-neon-cyan/[0.12] flex items-center justify-center shrink-0">
+                      <Icon size={16} className="text-neon-cyan" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-600 uppercase tracking-widest font-mono">{label}</p>
+                      <p className="text-sm text-gray-300">{value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider">Email</p>
-                    <p className="text-sm text-gray-300">hello@ashton.dev</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center shrink-0">
-                    <Phone size={18} className="text-primary-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider">Phone</p>
-                    <p className="text-sm text-gray-300">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center shrink-0">
-                    <MapPin size={18} className="text-primary-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider">Location</p>
-                    <p className="text-sm text-gray-300">San Francisco, CA</p>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500 mb-3">Find me on</p>
-              <SocialLinks />
-            </div>
+            </GlassCard>
+
+            <GlassCard padding="p-5">
+              <p className="text-xs text-gray-600 mb-3 font-mono uppercase tracking-widest">Find me on</p>
+              <div className="flex gap-2">
+                {['GitHub', 'LinkedIn', 'Twitter'].map((name) => (
+                  <a
+                    key={name}
+                    href="#"
+                    className="px-3 py-1.5 text-xs font-medium text-gray-400 rounded-lg glass hover:text-neon-cyan hover:border-neon-cyan/20 transition-all"
+                  >
+                    {name}
+                  </a>
+                ))}
+              </div>
+            </GlassCard>
           </motion.div>
 
           {/* Form */}
@@ -91,64 +83,67 @@ export default function Contact() {
             viewport={{ once: true }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="p-8 rounded-2xl glass space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">Name</label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    onFocus={() => setFocused('name')}
-                    onBlur={() => setFocused('')}
-                    placeholder="Ashton Mark G. Pino-on"
-                    className={inputClass('name')}
-                  />
+            <GlassCard>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="contact-name" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">Name</label>
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      onFocus={() => setFocused('name')}
+                      onBlur={() => setFocused('')}
+                      placeholder="Your name"
+                      className="input-glow"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">Email</label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      onFocus={() => setFocused('email')}
+                      onBlur={() => setFocused('')}
+                      placeholder="your@email.com"
+                      className="input-glow"
+                    />
+                  </div>
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
+                  <label htmlFor="contact-message" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">Message</label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={5}
                     required
-                    value={formData.email}
+                    value={formData.message}
                     onChange={handleChange}
-                    onFocus={() => setFocused('email')}
+                    onFocus={() => setFocused('message')}
                     onBlur={() => setFocused('')}
-                    placeholder="ashton@example.com"
-                    className={inputClass('email')}
+                    placeholder="Tell me about your project..."
+                    className="input-glow resize-none"
                   />
                 </div>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  onFocus={() => setFocused('message')}
-                  onBlur={() => setFocused('')}
-                  placeholder="Tell me about your project..."
-                  className={`${inputClass('message')} resize-none`}
-                />
-              </div>
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-xl hover:from-primary-500 hover:to-secondary-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/25"
-              >
-                <Send size={18} />
-                Send Message
-              </motion.button>
-            </form>
+                <MagneticButton
+                  onClick={undefined}
+                  className="btn-primary w-full"
+                  type="submit"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Send size={16} />
+                    Send Message
+                  </span>
+                </MagneticButton>
+              </form>
+            </GlassCard>
           </motion.div>
         </div>
       </div>

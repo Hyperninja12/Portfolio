@@ -1,0 +1,22 @@
+.shuffle-parent {
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: default;
+}
+
+.shuffle-char {
+  line-height: inherit;
+  display: inline-block;
+  text-align: center;
+}
+
+.shuffle-word {
+  display: inline-block;
+}
