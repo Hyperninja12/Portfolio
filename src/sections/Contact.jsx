@@ -7,9 +7,9 @@ import MagneticButton from '../components/ui/MagneticButton'
 import { fadeInLeft, fadeInRight } from '../utils/animations'
 
 const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'hello@ashton.dev' },
-  { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
-  { icon: MapPin, label: 'Location', value: 'San Francisco, CA' },
+  { icon: Mail, label: 'Email', value: 'Ashtonmark04516@gmail.com' },
+  { icon: Phone, label: 'Phone', value: '+64 992 262 9418' },
+  { icon: MapPin, label: 'Location', value: 'Barangay Maniki, Kapalong, Davao Del Norte' },
 ]
 
 export default function Contact() {

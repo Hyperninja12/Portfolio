@@ -12,6 +12,8 @@ const categoryColors = {
   DevOps: '#ec4899',
   Cloud: '#4d7cff',
   Tools: '#f59e0b',
+  Language: '#f97316',
+  Framework: '#ef4444',
 }
 
 const categoryEmojis = {
@@ -21,6 +23,8 @@ const categoryEmojis = {
   DevOps: '🐳',
   Cloud: '☁️',
   Tools: '🛠️',
+  Language: '☕',
+  Framework: '📦',
 }
 
 export default function Skills() {

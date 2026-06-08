@@ -134,10 +134,7 @@ export default function Hero() {
 
               {/* Avatar container — replace with your photo */}
               <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-2 border-neon-cyan/20 shadow-glow">
-                {/* TODO: Replace with <img src="/avatar.png" alt="Ashton" className="w-full h-full object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-neon-cyan/20 via-dark-800 to-neon-emerald/20 flex items-center justify-center">
-                  <span className="text-6xl sm:text-7xl lg:text-8xl font-black text-white/80 select-none">AP</span>
-                </div>
+                <img src="/profile.png" alt="Ashton Mark G. Pino-on" className="w-full h-full object-cover" />
               </div>
 
               {/* Floating tech badges */}
